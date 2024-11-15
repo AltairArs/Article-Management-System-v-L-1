@@ -1,0 +1,36 @@
+services:
+
+  postgres-service:
+    image: 'postgres:latest'
+    environment:
+      - 'POSTGRES_DB=articleManagementSystemDB'
+      - 'POSTGRES_PASSWORD=postgres'
+      - 'POSTGRES_USER=postgres'
+    ports:
+      - '5432:5432'
+
+  redis-service:
+    image: 'redis:latest'
+    ports:
+      - '6379:6379'
+
+  store-service:
+    build:
+      context: .
+      dockerfile: ./storeService/Dockerfile
+    ports:
+      - "8081:8080"
+    depends_on:
+      - postgres-service
+      - redis-service
+
+  pgadmin-service:
+    image: 'dpage/pgadmin4:latest'
+    environment:
+      - "PGADMIN_DEFAULT_EMAIL=admin@pgadmin.com"
+      - "PGADMIN_DEFAULT_PASSWORD=password"
+      - "PGADMIN_LISTEN_PORT=80"
+    ports:
+      - "15432:80"
+    depends_on:
+      - postgres-service

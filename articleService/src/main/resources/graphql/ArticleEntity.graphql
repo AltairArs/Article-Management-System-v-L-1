@@ -1,0 +1,10 @@
+type ArticleEntity {
+    id: ID!
+    title: String!
+    content: String!
+}
+
+type Query {
+    articles: [ArticleEntity!]
+    article: ArticleEntity
+}

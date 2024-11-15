@@ -1,4 +1,4 @@
-package com.storeservice.domain.models.entities;
+package com.articleservice.domain.models.entities;
 
 import jakarta.persistence.*;
 import lombok.*;

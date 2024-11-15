@@ -11,20 +11,19 @@
 # Структура
 ```mermaid
 graph TD
-    client(fa:fa-image VueJS)
-    apiGateaway([fa:fa-door-open Api Gateaway])
-    authenticationService{{fa:fa-microchip Authentication Service}}
-    articleService{{fa:fa-microchip Article Service}}
-    redis[(fa:fa-database Redis)]
-    postgres[(fa:fa-database PostgreSQL)]
+    client(Vue JS)
+    apiGateaway([Api Gateaway])
+    authenticationService{{Authentication Service}}
+    articleService{{Article Service}}
+    redis[(Redis)]
+    postgres[(PostgreSQL)]
 
     client <--> apiGateaway
-    apiGateaway <--> |fa:fa-code-branch RabbitMQ| authenticationService
-    apiGateaway <--> |fa:fa-code-branch RabbitMQ| articleService
+    apiGateaway <--> |RabbitMQ| authenticationService
+    apiGateaway <--> |RabbitMQ| articleService
     authenticationService <--> redis
     authenticationService <--> postgres
     articleService <--> postgres
-    authenticationService <--> |fa:fa-code-branch RabbitMQ| articleService
 
     subgraph **CLIENT**
     client

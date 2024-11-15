@@ -1,2 +1,2 @@
-schema: schema.graphql
+schema: ArticleEntity.graphql
 documents: '**/*.graphql'

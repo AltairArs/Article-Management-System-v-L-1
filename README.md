@@ -67,8 +67,8 @@ graph TD
 </summary>
 
 ### Получение всех статей
+Запрос
 ```graphql
-#Запрос
 query getArticles{
   getAllArticles {
       id,
@@ -77,8 +77,8 @@ query getArticles{
   }
 }
 ```
+Ответ
 ```json
-#Ответ
 {
     "data": {
         "getAllArticles": [
@@ -97,15 +97,17 @@ query getArticles{
 }
 ```
 ### Получение отдельной статьи
+Запрос
 ```graphql
-# Запрос
 query getArticle{
     getArticle(id: 2){
         title,
         content
     }
 }
-# Ответ
+```
+Ответ
+```json
 {
     "data": {
         "getArticle": {
@@ -116,8 +118,8 @@ query getArticle{
 }
 ```
 ### Создание статьи
+Запрос
 ```graphql
-# Запрос
 mutation createArticle{
     createArticle(title: "some title", content: "some content"){
         id,
@@ -125,7 +127,9 @@ mutation createArticle{
         content
     }
 }
-# Ответ
+```
+Ответ
+```json
 {
     "data": {
         "createArticle": {
@@ -137,15 +141,17 @@ mutation createArticle{
 }
 ```
 ### Изменение статьи
+Запрос
 ```graphql
-# Запрос
 mutation updateArticle{
     updateArticle(id: 4, title: "new_title"){
         title,
         content
     }
 }
-# Ответ
+```
+Ответ
+```json
 {
     "data": {
         "updateArticle": {
@@ -156,12 +162,14 @@ mutation updateArticle{
 }
 ```
 ### Удаление статьи
+Запрос
 ```graphql
-# Запрос
 mutation deleteArticle{
     deleteArticle(id: 4)
 }
-# Ответ
+```
+Ответ
+```json
 {
     "data": {
         "deleteArticle": null

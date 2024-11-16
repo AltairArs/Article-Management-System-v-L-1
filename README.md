@@ -3,6 +3,13 @@
 создания приложения на микросервисной архитектуре
 с использованием GraphQL и RabbitMQ.\
 Сервис для работы со статьями.
+## Основные моменты
+* Spring
+* GraphQL
+  * Validation
+* RabbitMQ
+* Microservices
+* Authentication
 # Требования
 - [ ] Аутентификация с помощью JWT-токенов (по email и паролю)
 - [x] Запуск через docker compose

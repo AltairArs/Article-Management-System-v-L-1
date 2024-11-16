@@ -9,7 +9,7 @@
   * 🔶Validation
 * 🔶RabbitMQ
 * 🔶Microservices
-* 🔶Authentication
+* 🔶JWT-Authentication
 # 📗Требования
 - [ ] Аутентификация с помощью JWT-токенов (по email и паролю)
 - [x] Запуск через docker compose

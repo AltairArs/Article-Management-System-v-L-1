@@ -1,6 +1,7 @@
 package com.articleservice.services.impl;
 
 import com.articleservice.domain.models.entities.ArticleEntity;
+import com.articleservice.exceptions.EntityNotFoundException;
 import com.articleservice.repo.entities.ArticleRepository;
 import com.articleservice.services.ArticleService;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +21,7 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public ArticleEntity getArticle(long id) {
-        return articleRepository.findById(id).get();
+        return articleRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Article with id: " + id + " not found"));
     }
 
     @Override
@@ -33,7 +34,7 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public ArticleEntity updateArticle(long id, String title, String content) {
-        ArticleEntity articleEntity = articleRepository.findById(id).get();
+        ArticleEntity articleEntity = articleRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Article with id: " + id + " not found"));
         if (content != null) articleEntity.setContent(content);
         if (title != null) articleEntity.setTitle(title);
         return articleRepository.save(articleEntity);

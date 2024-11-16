@@ -1,5 +1,7 @@
 package com.authenticationservice.config;
 
+import com.authenticationservice.utils.LocalDateTimeScalar;
+import graphql.schema.GraphQLScalarType;
 import graphql.validation.rules.OnValidationErrorStrategy;
 import graphql.validation.rules.ValidationRules;
 import graphql.validation.schemawiring.ValidationSchemaWiring;
@@ -18,6 +20,15 @@ public class GraphQLConfiguration {
 
         ValidationSchemaWiring schemaWiring = new ValidationSchemaWiring(validationRules);
 
-        return builder -> builder.directiveWiring(schemaWiring).build();
+        return builder -> builder
+                .directiveWiring(schemaWiring)
+                .scalar(
+                        GraphQLScalarType.newScalar()
+                                .name("LocalDateTime")
+                                .description("LocalDateTime type")
+                                .coercing(new LocalDateTimeScalar())
+                                .build()
+                )
+                .build();
     }
 }

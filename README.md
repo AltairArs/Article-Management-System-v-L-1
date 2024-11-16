@@ -7,6 +7,8 @@
 * 🔶Spring
 * 🔶GraphQL
   * 🔶Validation
+  * 🔶Custom Types
+    * 🔶Local Date Time
 * 🔶RabbitMQ
 * 🔶Microservices
 * 🔶JWT-Authentication

@@ -1,0 +1,37 @@
+scalar LocalDateTime
+
+directive @Email(message: String! = "Поле %s должно быть формата: example@example.example") on ARGUMENT_DEFINITION | INPUT_FIELD_DEFINITION
+directive @Size(min: Int! = 8, max: Int! = 21000, message: String! = "Поле %s должно состоять из минимум 8 символов") on ARGUMENT_DEFINITION | INPUT_FIELD_DEFINITION
+
+type User{
+    id: ID!
+    email: String!
+    createdAt: LocalDateTime!
+    lastLogin: LocalDateTime!
+}
+
+type JwtTokenResponse{
+    accessToken: String!
+    refreshToken: String!
+}
+
+type JwtToken{
+    id: ID!
+    expiration: Int!
+    userEmail: String!
+    tokenType: String!
+}
+
+type Query{
+    currentUser: User!
+    tokens: [JwtToken!]!
+}
+
+type Mutation{
+    authenticate(email: String! @Email, password: String! @Size): JwtTokenResponse!
+    register(email: String! @Email, password: String! @Size): JwtTokenResponse!
+    refreshToken(refreshToken: String!): JwtTokenResponse!
+    logout: Int
+
+    updateUser(password: String! @Size): User!
+}

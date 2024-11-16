@@ -76,6 +76,8 @@ query getArticles{
       content
   }
 }
+```
+```json
 #Ответ
 {
     "data": {

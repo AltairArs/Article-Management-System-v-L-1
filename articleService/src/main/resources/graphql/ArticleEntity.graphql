@@ -5,12 +5,12 @@ type ArticleEntity {
 }
 
 type Query {
-    articles: [ArticleEntity!]
-    article(id: ID): ArticleEntity
+    getAllArticles: [ArticleEntity!]!
+    getArticle(id: ID): ArticleEntity!
 }
 
 type Mutation {
-    createArticle(title: String!, content: String!): ArticleEntity
-    updateArticle(id: ID!, title: String, content: String): ArticleEntity
-    deleteArticle(id: ID!): ArticleEntity
+    createArticle(title: String!, content: String!): ArticleEntity!
+    updateArticle(id: ID!, title: String, content: String): ArticleEntity!
+    deleteArticle(id: ID!): Int
 }

@@ -6,30 +6,19 @@ import com.authenticationservice.domain.models.redis.JwtTokenRedisHash;
 import com.authenticationservice.repo.redis.JwtTokenRepository;
 import com.authenticationservice.services.AuthenticationService;
 import com.authenticationservice.services.UserService;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
-import org.springframework.graphql.server.WebGraphQlRequest;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-
-import java.util.Objects;
 
 @Controller
 @RequiredArgsConstructor
 public class AuthenticationController {
     private final AuthenticationService authenticationService;
     private final UserService userService;
-    private final JwtTokenRepository jwtTokenRepository;
-
-    @QueryMapping
-    public Iterable<JwtTokenRedisHash> tokens() {
-        return jwtTokenRepository.findAll();
-    }
 
     @QueryMapping
     public UserEntity currentUser(@AuthenticationPrincipal UserEntity user) {

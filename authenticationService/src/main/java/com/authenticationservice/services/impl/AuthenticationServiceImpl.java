@@ -63,12 +63,20 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         String email = jwtService.extractFromToken(tokenRedisHash.getToken(), "email");
         if (email == null)
             throw new InvalidDataException("Provided token is invalid");
-        jwtTokenRepository.deleteAll(jwtTokenRepository.findAllByUserEmail(email));
+        for (JwtTokenRedisHash jwtTokenRedisHash : jwtTokenRepository.findAll()) {
+            if(jwtTokenRedisHash.getUserEmail().equals(email)){
+                jwtTokenRepository.delete(jwtTokenRedisHash);
+            }
+        }
         return jwtService.generateTokenResponse(userService.getUserByEmail(email));
     }
 
     @Override
     public void logout(UserEntity user) {
-        jwtTokenRepository.deleteAll(jwtTokenRepository.findAllByUserEmail(user.getEmail()));
+        for (JwtTokenRedisHash jwtTokenRedisHash : jwtTokenRepository.findAll()) {
+            if(jwtTokenRedisHash.getUserEmail().equals(user.getEmail())){
+                jwtTokenRepository.delete(jwtTokenRedisHash);
+            }
+        }
     }
 }

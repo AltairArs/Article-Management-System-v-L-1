@@ -1,7 +1,7 @@
 scalar LocalDateTime
 
-directive @Email(message: String! = "Поле %s должно быть формата: example@example.example") on ARGUMENT_DEFINITION | INPUT_FIELD_DEFINITION
-directive @Size(min: Int! = 8, max: Int! = 21000, message: String! = "Поле %s должно состоять из минимум 8 символов") on ARGUMENT_DEFINITION | INPUT_FIELD_DEFINITION
+directive @Pattern(message: String! = "Поле должно быть формата: example@example.example", regexp: String! = "\\S+@\\S+\\.\\S+") on ARGUMENT_DEFINITION | INPUT_FIELD_DEFINITION
+directive @Size(min: Int! = 8, max: Int! = 21000, message: String! = "Поле должно состоять из минимум 8 символов") on ARGUMENT_DEFINITION | INPUT_FIELD_DEFINITION
 
 type User{
     id: ID!
@@ -15,21 +15,13 @@ type JwtTokenResponse{
     refreshToken: String!
 }
 
-type JwtToken{
-    id: ID!
-    expiration: Int!
-    userEmail: String!
-    tokenType: String!
-}
-
 type Query{
     currentUser: User!
-    tokens: [JwtToken!]!
 }
 
 type Mutation{
-    authenticate(email: String! @Email, password: String! @Size): JwtTokenResponse!
-    register(email: String! @Email, password: String! @Size): JwtTokenResponse!
+    authenticate(email: String! @Pattern, password: String! @Size): JwtTokenResponse!
+    register(email: String! @Pattern, password: String! @Size): JwtTokenResponse!
     refreshToken(refreshToken: String!): JwtTokenResponse!
     logout: Int
 

@@ -12,5 +12,6 @@ type Query {
 type Mutation {
     createArticle(title: String!, content: String!): ArticleEntity!
     updateArticle(id: ID!, title: String, content: String): ArticleEntity!
+    #None
     deleteArticle(id: ID!): Int
 }

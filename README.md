@@ -13,7 +13,7 @@
 * 🔶Microservices
 * 🔶JWT-Authentication
 # 📗Требования
-- [ ] Аутентификация с помощью JWT-токенов (по email и паролю)
+- [x] Аутентификация с помощью JWT-токенов (по email и паролю)
 - [x] Запуск через docker compose
 - [ ] Сервисы должны "общаться" через RabbitMQ
 - [x] CRUD операции над статьями
@@ -68,126 +68,78 @@ graph TD
 </details>
 
 # 📚Документация
-# 📈Тесты
+<details>
+<summary>
+<big>Authentication Service</big>
+</summary>
+
+### Схема
+
+```graphql
+scalar LocalDateTime
+
+directive @Pattern(message: String! = "Поле должно быть формата: example@example.example", regexp: String! = "\\S+@\\S+\\.\\S+") on ARGUMENT_DEFINITION | INPUT_FIELD_DEFINITION
+directive @Size(min: Int! = 8, max: Int! = 21000, message: String! = "Поле должно состоять из минимум 8 символов") on ARGUMENT_DEFINITION | INPUT_FIELD_DEFINITION
+
+type User{
+    id: ID!
+    email: String!
+    createdAt: LocalDateTime!
+    lastLogin: LocalDateTime!
+}
+
+type JwtTokenResponse{
+    accessToken: String!
+    refreshToken: String!
+}
+
+type Query{
+    currentUser: User!
+}
+
+type Mutation{
+    authenticate(email: String! @Pattern, password: String! @Size): JwtTokenResponse!
+    register(email: String! @Pattern, password: String! @Size): JwtTokenResponse!
+    refreshToken(refreshToken: String!): JwtTokenResponse!
+    #None
+    logout: Int
+
+    updateUser(password: String! @Size): User!
+}
+```
+
+</details>
 
 <details>
 <summary>
 <big>Article Service</big>
 </summary>
 
-### Получение всех статей
-Запрос
+### Схема
+
 ```graphql
-query getArticles{
-  getAllArticles {
-      id,
-      title,
-      content
-  }
+type ArticleEntity {
+    id: ID!
+    title: String!
+    content: String!
 }
-```
-Ответ
-```json
-{
-    "data": {
-        "getAllArticles": [
-            {
-                "id": "2",
-                "title": "some title",
-                "content": "some content"
-            },
-            {
-                "id": "3",
-                "title": "some title",
-                "content": "some content"
-            }
-        ]
-    }
+
+type Query {
+    getAllArticles: [ArticleEntity!]!
+    getArticle(id: ID): ArticleEntity!
 }
-```
-### Получение отдельной статьи
-Запрос
-```graphql
-query getArticle{
-    getArticle(id: 2){
-        title,
-        content
-    }
-}
-```
-Ответ
-```json
-{
-    "data": {
-        "getArticle": {
-            "title": "some title",
-            "content": "some content"
-        }
-    }
-}
-```
-### Создание статьи
-Запрос
-```graphql
-mutation createArticle{
-    createArticle(title: "some title", content: "some content"){
-        id,
-        title,
-        content
-    }
-}
-```
-Ответ
-```json
-{
-    "data": {
-        "createArticle": {
-            "id": "4",
-            "title": "some title",
-            "content": "some content"
-        }
-    }
-}
-```
-### Изменение статьи
-Запрос
-```graphql
-mutation updateArticle{
-    updateArticle(id: 4, title: "new_title"){
-        title,
-        content
-    }
-}
-```
-Ответ
-```json
-{
-    "data": {
-        "updateArticle": {
-            "title": "new_title",
-            "content": "some content"
-        }
-    }
-}
-```
-### Удаление статьи
-Запрос
-```graphql
-mutation deleteArticle{
-    deleteArticle(id: 4)
-}
-```
-Ответ
-```json
-{
-    "data": {
-        "deleteArticle": null
-    }
+
+type Mutation {
+    createArticle(title: String!, content: String!): ArticleEntity!
+    updateArticle(id: ID!, title: String, content: String): ArticleEntity!
+    #None
+    deleteArticle(id: ID!): Int
 }
 ```
 
 </details>
 
+# 📈Тесты
 # 🚩Запуск и развертывание
 Для запуска на компьютере должен быть установлен и запущен Docker.
 

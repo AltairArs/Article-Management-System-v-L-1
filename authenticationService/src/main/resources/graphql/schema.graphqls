@@ -23,6 +23,7 @@ type Mutation{
     authenticate(email: String! @Pattern, password: String! @Size): JwtTokenResponse!
     register(email: String! @Pattern, password: String! @Size): JwtTokenResponse!
     refreshToken(refreshToken: String!): JwtTokenResponse!
+    #None
     logout: Int
 
     updateUser(password: String! @Size): User!

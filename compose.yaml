@@ -32,3 +32,13 @@ services:
       - "8081:8080"
     depends_on:
       - postgres-service
+
+  api-gateway-service:
+    build:
+      context: .
+      dockerfile: ./apiGateway/Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - article-service
+      - authentication-service

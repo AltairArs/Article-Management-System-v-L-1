@@ -32,6 +32,7 @@
     <modules>
         <module>articleService</module>
         <module>authenticationService</module>
+        <module>apiGateway</module>
     </modules>
 
 </project>

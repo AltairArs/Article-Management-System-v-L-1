@@ -12,12 +12,12 @@ import org.springframework.cloud.gateway.server.mvc.filter.BeforeFilterFunctions
 @Configuration
 public class GatewayConfiguration {
 
-    private RouterFunction<ServerResponse> getRoute(String serviceName){
+    private RouterFunction<ServerResponse> getRoute(String serviceName, String port){
         return GatewayRouterFunctions
                 .route(serviceName + "-service")
                 .route(
                         RequestPredicates.path("/api/" + serviceName),
-                        HandlerFunctions.http("http://" + serviceName + "-service")
+                        HandlerFunctions.http("http://" + serviceName + "-service:" + port)
                 )
                 .before(BeforeFilterFunctions.rewritePath("/api/" + serviceName, "/graphql"))
                 .build();
@@ -25,11 +25,11 @@ public class GatewayConfiguration {
 
     @Bean
     public RouterFunction<ServerResponse> articleRoute() {
-        return getRoute("article");
+        return getRoute("article", "8080");
     }
 
     @Bean
     public RouterFunction<ServerResponse> authenticationRoute() {
-        return getRoute("authentication");
+        return getRoute("authentication", "8080");
     }
 }
